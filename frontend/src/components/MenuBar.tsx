@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { Chats } from "./Chats";
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 export const MenuBar = () => {
+  const navigate = useNavigate();
+  const [chats, setChats] = useState([""]);
   const menuVariants = {
     hidden: { x: "-100%" },
     visible: { x: "0%" },
   };
 
   const [openMenu, setOpenMenu] = useState(true);
+  const redirect = () => {
+    navigate("/");
+  };
   const handleClick = () => {
     setOpenMenu(!openMenu);
   };
@@ -86,6 +92,7 @@ export const MenuBar = () => {
                 </svg>
               </button>
               <button
+                onClick={redirect}
                 aria-label="New chat"
                 data-testid="create-new-chat-button"
                 className="h-10 rounded-lg px-2 text-token-text-secondary focus-visible:outline-0 disabled:text-token-text-quaternary focus-visible:bg-token-sidebar-surface-secondary enabled:hover:bg-token-sidebar-surface-secondary"
