@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const AiResponse_controller_1 = require("../controllers/AiResponse.controller");
+const user_middleware_1 = require("../middleware/user.middleware");
 const aiRouter = (0, express_1.Router)();
 aiRouter.route("/get-answer").post(AiResponse_controller_1.getAnswer);
+aiRouter.route("/get-chats").get(user_middleware_1.userAuth, AiResponse_controller_1.getChats);
+aiRouter.route("/save-chat").post(user_middleware_1.userAuth, AiResponse_controller_1.saveChat);
 exports.default = aiRouter;

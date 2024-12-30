@@ -3,13 +3,24 @@ import { UserMessage } from "./UserMessage";
 import { useSelector } from "react-redux";
 import { IRootState } from "../app/store/store";
 import { AiResponse } from "./AiMessage";
+import { getChats, saveChat } from "../hooks/Ai";
 
 export const MessageBox = () => {
   const [responses, setResponses] = useState([
-    { response_frm: "User", response: "helloFrmUser1", id: "2" },
-    { response_frm: "Ai", response: "helloFrmAI1", id: "3" },
+    { response_frm: "User", response: "helloFrmUser1", chatId: "2" },
+    { response_frm: "Ai", response: "helloFrmAI1", chatId: "3" },
   ]);
-
+  const saveCh = async (response: any) => {
+    const data = await saveChat(response, "Apple232@");
+    console.log(data);
+  };
+  useEffect(() => {
+    const fun = async () => {
+      const data = await getChats("Apple232@");
+      console.log(data);
+    };
+    fun();
+  }, []);
   const userReducerValue = useSelector(
     (state: IRootState) => state.userReducer
   );
@@ -17,12 +28,15 @@ export const MessageBox = () => {
     const response = {
       response_frm: "User",
       response: userReducerValue.userMessage,
-      id: userReducerValue.id,
+      chatId: userReducerValue.id,
     };
     if (userReducerValue) {
       setResponses((prevData) => {
-        const isDuplicate = prevData.some((item) => item.id === response.id);
+        const isDuplicate = prevData.some(
+          (item) => item.chatId === response.chatId
+        );
         if (!isDuplicate) {
+          saveCh(response);
           return [...prevData, response];
         }
         return prevData;
@@ -36,11 +50,16 @@ export const MessageBox = () => {
       const response = {
         response_frm: "Ai",
         response: aiReducerValue.AiMessage,
-        id: aiReducerValue.id,
+        chatId: aiReducerValue.id,
       };
+      console.log(response);
+
       setResponses((prevData) => {
-        const isDuplicate = prevData.some((item) => item.id === response.id);
+        const isDuplicate = prevData.some(
+          (item) => item.chatId === response.chatId
+        );
         if (!isDuplicate) {
+          saveCh(response);
           return [...prevData, response];
         }
         return prevData;

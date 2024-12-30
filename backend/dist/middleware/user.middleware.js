@@ -21,7 +21,6 @@ const userAuth = (req, res, next) => {
         var _a, _b;
         try {
             const jwtToken = ((_a = req.headers) === null || _a === void 0 ? void 0 : _a.authorization) || ((_b = req.cookies) === null || _b === void 0 ? void 0 : _b.accessToken);
-            console.log(jwtToken);
             if (!jwtToken) {
                 return next(new ApiError_1.default(400, "Token not provided."));
             }
@@ -33,7 +32,6 @@ const userAuth = (req, res, next) => {
             }
             const decodedToken = jsonwebtoken_1.default.verify(token, "process.env.accessTokenSecret");
             const userId = decodedToken._id;
-            console.log(userId);
             const user = yield user_models_1.default.findById(userId).select("-password");
             if (!user) {
                 return next(new ApiError_1.default(400, "No User Found with this token."));

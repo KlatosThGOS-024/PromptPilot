@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler";
 import ApiResponse from "../utils/ApiResponse";
-import { IUser, userCreateSchema, userLoginSchema } from "../types/user.types";
 import ApiError from "../utils/ApiError";
-import User from "../models/user.models";
-import { get } from "mongoose";
+
+import Chat from "../models/ai.models";
 
 const getAnswer = asyncHandler(async (req: Request, res: Response) => {
   const getQuestion = req.body.getQuestion as string;
@@ -46,5 +45,99 @@ const getAnswer = asyncHandler(async (req: Request, res: Response) => {
     return;
   }
 });
+const getChats = asyncHandler(async (req: Request, res: Response) => {
+  const chatId = req.query.id;
+  if (chatId == "") {
+    res.status(400).send(new ApiError(400, "Chat id went wrong"));
+    return;
+  }
+  console.log(chatId);
+  try {
+    const chat = await Chat.findOne({
+      userId: req.user._id,
+      "sessions.sessionId": chatId,
+    });
+    console.log(chat);
+    if (!chat) {
+      res.status(404).send(new ApiError(400, "Chat not found"));
+      return;
+    }
 
-export { getAnswer };
+    res
+      .status(200)
+      .send(new ApiResponse(200, chat, "Successfully get the Chats"));
+  } catch (error: any) {
+    res
+      .status(400)
+      .send(new ApiError(400, "Something went wrong", error.error));
+    return;
+  }
+});
+const saveChat = asyncHandler(async (req: Request, res: Response) => {
+  const { chat } = req.body;
+  const sessionId = req.query.id;
+  const userId = req.user._id;
+  if (chat == "") {
+    res.status(400).send(new ApiError(400, "Chat! Something  went wrong"));
+    return;
+  }
+  const { response_frm, response, nanoId } = chat.messages;
+
+  try {
+    const updateChatSection = await Chat.findOneAndUpdate(
+      {
+        "sessions.sessionId": sessionId,
+        userId,
+      },
+      {
+        $push: {
+          "sessions.$.messages": {
+            response_frm,
+            response,
+            nanoId,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updateChatSection) {
+      console.log("user id2");
+
+      const createNewChatSession = await Chat.create({
+        userId,
+        sessions: [
+          {
+            sessionId,
+            messages: [
+              {
+                response_frm,
+                response,
+                nanoId,
+              },
+            ],
+          },
+        ],
+      });
+      res
+        .status(200)
+        .send(
+          new ApiResponse(
+            200,
+            createNewChatSession,
+            "Successfully saved the Chat"
+          )
+        );
+      return;
+    }
+    res.status(200).send(new ApiResponse(200, "Successfully saved the Chat"));
+    return;
+  } catch (error: any) {
+    res
+      .status(400)
+      .send(new ApiError(400, "Something went wrong", error.error));
+    return;
+  }
+});
+
+export { getAnswer, getChats, saveChat };

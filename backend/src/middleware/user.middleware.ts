@@ -8,7 +8,6 @@ const userAuth = (req: Request, res: Response, next: NextFunction) => {
     try {
       const jwtToken = req.headers?.authorization || req.cookies?.accessToken;
 
-      console.log(jwtToken);
       if (!jwtToken) {
         return next(new ApiError(400, "Token not provided."));
       }
@@ -23,7 +22,6 @@ const userAuth = (req: Request, res: Response, next: NextFunction) => {
 
       const decodedToken = jwt.verify(token, "process.env.accessTokenSecret");
       const userId = (decodedToken as JwtPayload)._id;
-      console.log(userId);
       const user = await User.findById(userId).select("-password");
 
       if (!user) {

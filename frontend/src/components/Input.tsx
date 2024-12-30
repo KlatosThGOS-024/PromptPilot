@@ -1,7 +1,7 @@
 import { SetStateAction, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMessageRight, addMessageLeft } from "../functions/messages/message";
-import getAIresponse from "../hooks/Ai";
+import { getAIresponse, saveChat } from "../hooks/Ai";
 
 function InputTaker({
   setUserMessage,
@@ -27,6 +27,7 @@ export const Input = () => {
   const dispatch = useDispatch();
   const handleSubmit = async () => {
     dispatch(addMessageRight(userMessage));
+    //
 
     const response = await getAIresponse(userMessage);
     dispatch(addMessageLeft(response));
