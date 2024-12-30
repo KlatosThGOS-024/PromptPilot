@@ -20,8 +20,7 @@ const getAIresponse = async (message: string) => {
 const getChats = async (id: string) => {
   try {
     const url = `http://localhost:3000/api/v1/ai/get-chats?id=${id}`;
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzcyODNhNTUwNWU0NjAxOWUzNjYyNTYiLCJ1c2VybmFtZSI6IkFwcGxlQDEyMyIsImlhdCI6MTczNTU1ODQ3NH0.28_wiCxu8vchb0x8PdDAOonXue5ac5o9JHSRDcMikwI";
+    const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -31,7 +30,7 @@ const getChats = async (id: string) => {
     });
     const data = await response.json();
     const text = await data.data;
-    console.log(text);
+    return text;
   } catch (error) {
     console.log(error);
   }
@@ -39,8 +38,7 @@ const getChats = async (id: string) => {
 const saveChat = async (message: any, id: any) => {
   try {
     const url = `http://localhost:3000/api/v1/ai/save-chat?id=${id}`;
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzcyODNhNTUwNWU0NjAxOWUzNjYyNTYiLCJ1c2VybmFtZSI6IkFwcGxlQDEyMyIsImlhdCI6MTczNTU1ODQ3NH0.28_wiCxu8vchb0x8PdDAOonXue5ac5o9JHSRDcMikwI";
+    const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "POST",
       headers: {

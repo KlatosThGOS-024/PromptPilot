@@ -3,24 +3,23 @@ import { UserMessage } from "./UserMessage";
 import { useSelector } from "react-redux";
 import { IRootState } from "../app/store/store";
 import { AiResponse } from "./AiMessage";
-import { getChats, saveChat } from "../hooks/Ai";
+import { getChats, saveChat } from "../api/AiApi";
+import { useParams } from "react-router-dom";
 
 export const MessageBox = () => {
+  const { sessionId } = useParams();
   const [responses, setResponses] = useState([
     { response_frm: "User", response: "helloFrmUser1", chatId: "2" },
     { response_frm: "Ai", response: "helloFrmAI1", chatId: "3" },
   ]);
-  const saveCh = async (response: any) => {
-    const data = await saveChat(response, "Apple232@");
-    console.log(data);
-  };
-  useEffect(() => {
-    const fun = async () => {
-      const data = await getChats("Apple232@");
-      console.log(data);
-    };
-    fun();
-  }, []);
+
+  // useEffect(() => {
+  //   const fun = async () => {
+  //     const data = await getChats("Apple232@");
+  //     console.log(data);
+  //   };
+  //   fun();
+  // }, []);
   const userReducerValue = useSelector(
     (state: IRootState) => state.userReducer
   );
@@ -36,7 +35,7 @@ export const MessageBox = () => {
           (item) => item.chatId === response.chatId
         );
         if (!isDuplicate) {
-          saveCh(response);
+          saveChat(response, sessionId);
           return [...prevData, response];
         }
         return prevData;
@@ -52,14 +51,12 @@ export const MessageBox = () => {
         response: aiReducerValue.AiMessage,
         chatId: aiReducerValue.id,
       };
-      console.log(response);
 
       setResponses((prevData) => {
         const isDuplicate = prevData.some(
           (item) => item.chatId === response.chatId
         );
         if (!isDuplicate) {
-          saveCh(response);
           return [...prevData, response];
         }
         return prevData;

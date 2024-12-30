@@ -97,39 +97,41 @@ const saveChat = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, voi
     }
     const { response_frm, response, nanoId } = chat.messages;
     try {
-        const updateChatSection = yield ai_models_1.default.findOneAndUpdate({
-            "sessions.sessionId": sessionId,
-            userId,
-        }, {
-            $push: {
-                "sessions.$.messages": {
-                    response_frm,
-                    response,
-                    nanoId,
-                },
-            },
-        }, { new: true });
-        if (!updateChatSection) {
-            console.log("user id2");
-            const createNewChatSession = yield ai_models_1.default.create({
+        if (sessionId) {
+            const updateChatSection = yield ai_models_1.default.findOneAndUpdate({
+                "sessions.sessionId": sessionId,
                 userId,
-                sessions: [
-                    {
-                        sessionId,
-                        messages: [
-                            {
-                                response_frm,
-                                response,
-                                nanoId,
-                            },
-                        ],
+            }, {
+                $push: {
+                    "sessions.$.messages": {
+                        response_frm,
+                        response,
+                        nanoId,
                     },
-                ],
-            });
-            res
-                .status(200)
-                .send(new ApiResponse_1.default(200, createNewChatSession, "Successfully saved the Chat"));
-            return;
+                },
+            }, { new: true });
+            if (!updateChatSection) {
+                console.log("user id2");
+                const createNewChatSession = yield ai_models_1.default.create({
+                    userId,
+                    sessions: [
+                        {
+                            sessionId,
+                            messages: [
+                                {
+                                    response_frm,
+                                    response,
+                                    nanoId,
+                                },
+                            ],
+                        },
+                    ],
+                });
+                res
+                    .status(200)
+                    .send(new ApiResponse_1.default(200, createNewChatSession, "Successfully saved the Chat"));
+                return;
+            }
         }
         res.status(200).send(new ApiResponse_1.default(200, "Successfully saved the Chat"));
         return;

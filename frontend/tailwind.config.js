@@ -11,6 +11,7 @@ export default {
       fontFamily: {
         domine: ["Domine", "serif"],
         lexend: ["Lexend Deca", "sans-serif"],
+        public_sans: ["Public Sans", "sans-serif"],
       },
     },
   },

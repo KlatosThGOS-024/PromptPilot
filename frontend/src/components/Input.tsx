@@ -1,7 +1,7 @@
 import { SetStateAction, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMessageRight, addMessageLeft } from "../functions/messages/message";
-import { getAIresponse, saveChat } from "../hooks/Ai";
+import { getAIresponse, saveChat } from "../api/AiApi";
 
 function InputTaker({
   setUserMessage,
