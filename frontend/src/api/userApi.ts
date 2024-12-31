@@ -1,7 +1,14 @@
 const logOutUser = async () => {
+  const token = localStorage.getItem("accessToken");
   const response = await fetch("http://localhost:3000/api/v1/user/logout", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
   });
+
+  localStorage.clear();
   return response;
 };
 const logInUser = async (params: {

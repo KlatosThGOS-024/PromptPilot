@@ -4,15 +4,15 @@ export const DiscoverCards = () => {
   const cards = [
     {
       text: "Suggest 5 plants that can live indoors and are low maintenance",
-      imgSrc: "../../public/Cards/coffee.jpg",
+      imgSrc: "/Cards/coffee.jpg",
     },
     {
       text: "Suggest 5 plants that can live indoors and are low maintenance",
-      imgSrc: "../../public/Cards/coffee.jpg",
+      imgSrc: "/Cards/coffee.jpg",
     },
     {
       text: "Suggest 5 plants that can live indoors and are low maintenance",
-      imgSrc: "../../public/Cards/coffee.jpg",
+      imgSrc: "/Cards/coffee.jpg",
     },
   ];
   return (

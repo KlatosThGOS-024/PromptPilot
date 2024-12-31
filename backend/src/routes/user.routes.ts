@@ -11,5 +11,5 @@ const userRouter = Router();
 userRouter.route("/signUp").post(userCreate);
 userRouter.route("/login").post(userLogin);
 userRouter.route("/user-profile").get(userAuth, userProfile);
-userRouter.route("/logout").get(userAuth, userLogout);
+userRouter.route("/logout").post(userAuth, userLogout);
 export default userRouter;

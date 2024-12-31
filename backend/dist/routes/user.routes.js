@@ -7,5 +7,5 @@ const userRouter = (0, express_1.Router)();
 userRouter.route("/signUp").post(user_controller_1.userCreate);
 userRouter.route("/login").post(user_controller_1.userLogin);
 userRouter.route("/user-profile").get(user_middleware_1.userAuth, user_controller_1.userProfile);
-userRouter.route("/logout").get(user_middleware_1.userAuth, user_controller_1.userLogout);
+userRouter.route("/logout").post(user_middleware_1.userAuth, user_controller_1.userLogout);
 exports.default = userRouter;
