@@ -43,18 +43,20 @@ const logInCheck = async () => {
   });
   return response;
 };
-const getCurrentUser = async () => {
+const getUserProfile = async () => {
+  const token = localStorage.getItem("accessToken");
   const response = await fetch(
-    "http://localhost:3000/api/v1/user/get-currentUser",
+    "http://localhost:3000/api/v1/user/user-profile",
+
     {
       method: "GET",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
     }
   );
   return response;
 };
 
-export { logOutUser, logInUser, logInCheck, getCurrentUser, createAccount };
+export { logOutUser, logInUser, logInCheck, getUserProfile, createAccount };

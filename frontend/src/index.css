@@ -10,3 +10,11 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

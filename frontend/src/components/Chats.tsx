@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getAllChats } from "../api/AiApi";
-import { Link } from "react-router-dom";
 import { Chat } from "./Chat";
 
 export const Chats = () => {
@@ -24,9 +23,9 @@ export const Chats = () => {
 
         return (
           id != undefined && (
-            <Link key={index} to={`/c/${id}`}>
+            <a key={index} href={`/c/${id}`}>
               <Chat sessionId={id} />
-            </Link>
+            </a>
           )
         );
       })}

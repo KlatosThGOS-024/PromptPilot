@@ -56,22 +56,26 @@ const userLogin = asyncHandler(async (req: Request, res: Response) => {
   const passwordComp = await userExisted.comparePassword(
     userData?.data.password
   );
+
   if (!passwordComp) {
     res.send(new ApiError(400, "Credentails are wrong"));
     return;
   }
   const accessToken = await generateAccessToken(userExisted);
+  userExisted.password = "";
 
   res
     .cookie("accessToken", accessToken)
-    .send(new ApiResponse(200, accessToken, "Successfully login"));
+    .send(
+      new ApiResponse(200, { accessToken, userExisted }, "Successfully login")
+    );
 });
 const userProfile = asyncHandler(async (req: Request, res: Response) => {
-  const { userId } = req.body;
+  const userId = req.user._id;
   if (!userId) {
     res.status(400).send(new ApiError(400, "User Profie unsuccessfull"));
   }
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).select("-password");
   if (!user) {
     res.status(400).send(new ApiError(400, "User Profie unsuccessfull"));
   }

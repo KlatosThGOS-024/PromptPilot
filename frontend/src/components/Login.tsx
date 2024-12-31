@@ -1,6 +1,8 @@
 import { SetStateAction, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { logInUser } from "../api/userApi";
+import { useDispatch } from "react-redux";
+import { userAccountDetail } from "../functions/messages/message";
 
 function InputTaker({
   label,
@@ -29,6 +31,7 @@ function InputTaker({
 }
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +44,8 @@ export const Login = () => {
     const response = await logInUser(data);
     const responseData = await response;
     if (responseData.statusCode === 200) {
-      localStorage.setItem("accessToken", responseData.data);
+      localStorage.setItem("accessToken", responseData.data.accessToken);
+
       navigate("/pilot");
     } else {
       console.error(responseData);

@@ -1,28 +1,24 @@
 import { useEffect, useState } from "react";
 import { Chats } from "./Chats";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+
 export const MenuBar = () => {
-  const navigate = useNavigate();
-  const [chats, setChats] = useState([""]);
   const menuVariants = {
     hidden: { x: "-100%" },
     visible: { x: "0%" },
   };
 
   const [openMenu, setOpenMenu] = useState(true);
-  const redirect = () => {
-    navigate("/pilot");
-  };
+
   const handleClick = () => {
     setOpenMenu(!openMenu);
   };
-  useEffect(() => {
-    const handleResize = () =>
-      setOpenMenu((prev) => prev && window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () =>
+  //     setOpenMenu((prev) => prev && window.innerWidth < 768);
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   return (
     <section>
@@ -31,7 +27,9 @@ export const MenuBar = () => {
         animate={openMenu ? "visible" : "hidden"}
         variants={menuVariants}
         transition={{ type: "tween", duration: 0.3 }}
-        className={`h-screen bg-lightBlue2 `}
+        className={`h-screen bg-lightBlue2
+           overflow-y-auto custom-scrollbar flex-grow 
+           max-md:absolute max-sm:w-[320px] max-md:w-[360px] md:w-[420px]  `}
       >
         <div className="px-[18px]  py-[12px] text-[#ECECEC] ">
           <div className=" flex items-center justify-between ">
@@ -91,7 +89,7 @@ export const MenuBar = () => {
                   ></path>
                 </svg>
               </button>
-              <Link to={"/pilot"}>
+              <a href={"/pilot"}>
                 <button
                   aria-label="New chat"
                   data-testid="create-new-chat-button"
@@ -111,7 +109,7 @@ export const MenuBar = () => {
                     ></path>
                   </svg>
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
           <div className="flex items-center gap-2 hover:bg-slate-800 px-[12px] py-[8px] rounded-lg">

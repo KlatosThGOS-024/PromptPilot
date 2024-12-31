@@ -67,17 +67,18 @@ const userLogin = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, vo
         return;
     }
     const accessToken = yield generateAccessToken(userExisted);
+    userExisted.password = "";
     res
         .cookie("accessToken", accessToken)
-        .send(new ApiResponse_1.default(200, accessToken, "Successfully login"));
+        .send(new ApiResponse_1.default(200, { accessToken, userExisted }, "Successfully login"));
 }));
 exports.userLogin = userLogin;
 const userProfile = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.body;
+    const userId = req.user._id;
     if (!userId) {
         res.status(400).send(new ApiError_1.default(400, "User Profie unsuccessfull"));
     }
-    const user = yield user_models_1.default.findById(userId);
+    const user = yield user_models_1.default.findById(userId).select("-password");
     if (!user) {
         res.status(400).send(new ApiError_1.default(400, "User Profie unsuccessfull"));
     }

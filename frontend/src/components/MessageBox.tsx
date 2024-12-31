@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { UserMessage } from "./UserMessage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../app/store/store";
 import { AiResponse } from "./AiMessage";
 import {
@@ -10,16 +10,27 @@ import {
 } from "../api/AiApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { DiscoverCards } from "./DiscoverCards";
+import { makeItFalse } from "../functions/messages/message";
 interface responseType {
   response_frm: string;
   response: string;
   chatId: string;
 }
 export const MessageBox = () => {
+  const dispatch = useDispatch();
   const { sessionId } = useParams();
+  const cardSelector = useSelector(
+    (state: IRootState) => state.cardReducer.status
+  );
   const navigate = useNavigate();
-  const [responses, setResponses] = useState<responseType[]>([]);
 
+  const [responses, setResponses] = useState<responseType[]>([]);
+  useEffect(() => {
+    if (sessionId) {
+      dispatch(makeItFalse());
+    }
+  }, [sessionId]);
   useEffect(() => {
     const getChatFunc = async (sessionId: string) => {
       const response = await getParticularChat(sessionId);
@@ -45,6 +56,10 @@ export const MessageBox = () => {
   const userReducerValue = useSelector(
     (state: IRootState) => state.userReducer
   );
+  const userSelector = useSelector((state: IRootState) => {
+    return state.userReducer.userDetail;
+  });
+  console.log(userSelector);
   useEffect(() => {
     const response = {
       response_frm: "User",
@@ -99,7 +114,12 @@ export const MessageBox = () => {
   }, [aiReducerValue]);
 
   return (
-    <section className="w-full my-7 py-[18px]">
+    <section className="w-full my-7 pb-[64px] pt-4">
+      {cardSelector && (
+        <div className="  my-[196px] ">
+          <DiscoverCards />
+        </div>
+      )}
       <div className="space-y-[21px]">
         {responses.map((value, index) => {
           if (value.response_frm == "User") {

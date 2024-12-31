@@ -14,6 +14,7 @@ const userSchema = new Schema<IUser>({
   },
   password: {
     type: String,
+
     required: true,
     validate: {
       validator: function (value: string) {
