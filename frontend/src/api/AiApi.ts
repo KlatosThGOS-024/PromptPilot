@@ -17,9 +17,26 @@ const getAIresponse = async (message: string) => {
     console.log(error);
   }
 };
-const getChats = async (id: string) => {
+const getAllChats = async () => {
   try {
-    const url = `http://localhost:3000/api/v1/ai/get-chats?id=${id}`;
+    const url = `http://localhost:3000/api/v1/ai/get-all-chat`;
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const getParticularChat = async (id: string) => {
+  try {
+    const url = `http://localhost:3000/api/v1/ai/get-particular-chat?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
@@ -35,9 +52,9 @@ const getChats = async (id: string) => {
     console.log(error);
   }
 };
-const saveChat = async (message: any, id: any) => {
+const saveNewChat = async (message: any, id: any) => {
   try {
-    const url = `http://localhost:3000/api/v1/ai/save-chat?id=${id}`;
+    const url = `http://localhost:3000/api/v1/ai/save-chat-new?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "POST",
@@ -52,10 +69,37 @@ const saveChat = async (message: any, id: any) => {
       }),
     });
     const data = await response.json();
-    const text = await data.data;
-    console.log(text);
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
-export { getAIresponse, getChats, saveChat };
+const saveOldSessionChat = async (message: any, id: any) => {
+  try {
+    const url = `http://localhost:3000/api/v1/ai/save-chat-old?id=${id}`;
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        chat: {
+          messages: message,
+        },
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export {
+  getAIresponse,
+  getAllChats,
+  saveNewChat,
+  getParticularChat,
+  saveOldSessionChat,
+};

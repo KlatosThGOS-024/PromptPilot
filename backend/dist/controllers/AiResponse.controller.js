@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveChat = exports.getChats = exports.getAnswer = void 0;
+exports.saveChatAtCurrentSession = exports.saveNewChatSession = exports.getParticularChat = exports.getAllChats = exports.getAnswer = void 0;
 const asyncHandler_1 = __importDefault(require("../utils/asyncHandler"));
 const ApiResponse_1 = __importDefault(require("../utils/ApiResponse"));
 const ApiError_1 = __importDefault(require("../utils/ApiError"));
@@ -58,19 +58,38 @@ const getAnswer = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, vo
     }
 }));
 exports.getAnswer = getAnswer;
-const getChats = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const chatId = req.query.id;
-    if (chatId == "") {
-        res.status(400).send(new ApiError_1.default(400, "Chat id went wrong"));
+const getAllChats = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const chat = yield ai_models_1.default.find({
+            userId: req.user._id,
+        });
+        if (!chat) {
+            res.status(400).send(new ApiError_1.default(400, "Chats not found", chat));
+            return;
+        }
+        res
+            .status(200)
+            .send(new ApiResponse_1.default(200, chat, "Successfully get the Chats"));
+    }
+    catch (error) {
+        res
+            .status(400)
+            .send(new ApiError_1.default(400, "Something went wrong", error.error));
         return;
     }
-    console.log(chatId);
+}));
+exports.getAllChats = getAllChats;
+const getParticularChat = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const chatId = req.query.id;
+    if (chatId == "") {
+        res.status(404).send(new ApiError_1.default(400, "Chat with this id is not avaible"));
+        return;
+    }
     try {
         const chat = yield ai_models_1.default.findOne({
             userId: req.user._id,
             "sessions.sessionId": chatId,
         });
-        console.log(chat);
         if (!chat) {
             res.status(404).send(new ApiError_1.default(400, "Chat not found"));
             return;
@@ -86,54 +105,34 @@ const getChats = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, voi
         return;
     }
 }));
-exports.getChats = getChats;
-const saveChat = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getParticularChat = getParticularChat;
+const saveChatAtCurrentSession = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { chat } = req.body;
     const sessionId = req.query.id;
     const userId = req.user._id;
     if (chat == "") {
-        res.status(400).send(new ApiError_1.default(400, "Chat! Something  went wrong"));
+        res
+            .status(400)
+            .send(new ApiError_1.default(400, "Chat body please provide! Something  went wrong"));
         return;
     }
-    const { response_frm, response, nanoId } = chat.messages;
+    const { response_frm, response, chatId } = chat.messages;
     try {
-        if (sessionId) {
-            const updateChatSection = yield ai_models_1.default.findOneAndUpdate({
-                "sessions.sessionId": sessionId,
-                userId,
-            }, {
-                $push: {
-                    "sessions.$.messages": {
-                        response_frm,
-                        response,
-                        nanoId,
-                    },
+        const updateChatSection = yield ai_models_1.default.findOneAndUpdate({
+            "sessions.sessionId": sessionId,
+            userId,
+        }, {
+            $push: {
+                "sessions.$.messages": {
+                    response_frm,
+                    response,
+                    chatId,
                 },
-            }, { new: true });
-            if (!updateChatSection) {
-                console.log("user id2");
-                const createNewChatSession = yield ai_models_1.default.create({
-                    userId,
-                    sessions: [
-                        {
-                            sessionId,
-                            messages: [
-                                {
-                                    response_frm,
-                                    response,
-                                    nanoId,
-                                },
-                            ],
-                        },
-                    ],
-                });
-                res
-                    .status(200)
-                    .send(new ApiResponse_1.default(200, createNewChatSession, "Successfully saved the Chat"));
-                return;
-            }
-        }
-        res.status(200).send(new ApiResponse_1.default(200, "Successfully saved the Chat"));
+            },
+        }, { new: true });
+        res
+            .status(200)
+            .send(new ApiResponse_1.default(200, updateChatSection, "Successfully saved the Chat"));
         return;
     }
     catch (error) {
@@ -143,4 +142,44 @@ const saveChat = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, voi
         return;
     }
 }));
-exports.saveChat = saveChat;
+exports.saveChatAtCurrentSession = saveChatAtCurrentSession;
+const saveNewChatSession = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { chat } = req.body;
+    const sessionId = req.query.id;
+    const userId = req.user._id;
+    if (chat == "") {
+        res
+            .status(400)
+            .send(new ApiError_1.default(400, "Chat body please provide! Something  went wrong"));
+        return;
+    }
+    const { response_frm, response, chatId } = chat.messages;
+    try {
+        const createNewChatSession = yield ai_models_1.default.create({
+            userId,
+            sessions: [
+                {
+                    sessionId,
+                    messages: [
+                        {
+                            response_frm,
+                            response,
+                            chatId,
+                        },
+                    ],
+                },
+            ],
+        });
+        res
+            .status(200)
+            .send(new ApiResponse_1.default(200, createNewChatSession, "Successfully saved the Chat"));
+        return;
+    }
+    catch (error) {
+        res
+            .status(400)
+            .send(new ApiError_1.default(400, "Something went wrong", error.error));
+        return;
+    }
+}));
+exports.saveNewChatSession = saveNewChatSession;

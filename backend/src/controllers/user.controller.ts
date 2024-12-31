@@ -79,7 +79,6 @@ const userProfile = asyncHandler(async (req: Request, res: Response) => {
     .status(200)
     .send(new ApiResponse(200, user, "User Profile Successfully retrevied"));
 });
-
 const userLogout = asyncHandler(async (req: Request, res: Response) => {
   res
     .clearCookie("accessToken")

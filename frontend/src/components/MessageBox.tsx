@@ -3,23 +3,45 @@ import { UserMessage } from "./UserMessage";
 import { useSelector } from "react-redux";
 import { IRootState } from "../app/store/store";
 import { AiResponse } from "./AiMessage";
-import { getChats, saveChat } from "../api/AiApi";
-import { useParams } from "react-router-dom";
-
+import {
+  getParticularChat,
+  saveNewChat,
+  saveOldSessionChat,
+} from "../api/AiApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+interface responseType {
+  response_frm: string;
+  response: string;
+  chatId: string;
+}
 export const MessageBox = () => {
   const { sessionId } = useParams();
-  const [responses, setResponses] = useState([
-    { response_frm: "User", response: "helloFrmUser1", chatId: "2" },
-    { response_frm: "Ai", response: "helloFrmAI1", chatId: "3" },
-  ]);
+  const navigate = useNavigate();
+  const [responses, setResponses] = useState<responseType[]>([]);
 
-  // useEffect(() => {
-  //   const fun = async () => {
-  //     const data = await getChats("Apple232@");
-  //     console.log(data);
-  //   };
-  //   fun();
-  // }, []);
+  useEffect(() => {
+    const getChatFunc = async (sessionId: string) => {
+      const response = await getParticularChat(sessionId);
+      return await response;
+    };
+    if (sessionId) {
+      getChatFunc(sessionId).then((response) => {
+        setResponses((prevData) => {
+          const message = response.sessions[0].messages;
+          const combinedData = [...prevData, ...message];
+
+          const uniqueResponses = combinedData.filter(
+            (item, index, self) =>
+              self.findIndex((entry) => entry.chatId === item.chatId) === index
+          );
+
+          return uniqueResponses;
+        });
+      });
+    }
+  }, []);
+
   const userReducerValue = useSelector(
     (state: IRootState) => state.userReducer
   );
@@ -29,13 +51,19 @@ export const MessageBox = () => {
       response: userReducerValue.userMessage,
       chatId: userReducerValue.id,
     };
-    if (userReducerValue) {
+    if (userReducerValue?.userMessage && userReducerValue?.id) {
+      if (sessionId == undefined) {
+        const newSessionId = uuidv4();
+        navigate(`/c/${newSessionId}`, { replace: true });
+        saveNewChat(response, newSessionId);
+      } else {
+        saveOldSessionChat(response, sessionId);
+      }
       setResponses((prevData) => {
         const isDuplicate = prevData.some(
           (item) => item.chatId === response.chatId
         );
         if (!isDuplicate) {
-          saveChat(response, sessionId);
           return [...prevData, response];
         }
         return prevData;
@@ -45,12 +73,18 @@ export const MessageBox = () => {
 
   const aiReducerValue = useSelector((state: IRootState) => state.AiReducer);
   useEffect(() => {
-    if (aiReducerValue) {
+    if (aiReducerValue?.AiMessage && aiReducerValue?.id) {
       const response = {
         response_frm: "Ai",
         response: aiReducerValue.AiMessage,
         chatId: aiReducerValue.id,
       };
+      if (sessionId == undefined) {
+        const newSessionId = uuidv4();
+        saveNewChat(response, newSessionId);
+      } else {
+        saveOldSessionChat(response, sessionId);
+      }
 
       setResponses((prevData) => {
         const isDuplicate = prevData.some(
