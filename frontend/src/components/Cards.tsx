@@ -5,6 +5,7 @@ import {
   makeItFalse,
 } from "../functions/messages/message";
 import { getAIresponse } from "../api/AiApi";
+import React from "react";
 
 export const Cards = ({ text, imgSrc }: { text: string; imgSrc: string }) => {
   const dispatch = useDispatch();

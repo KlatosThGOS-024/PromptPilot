@@ -10,7 +10,7 @@ function InputTaker({
 }) {
   return (
     <div className="w-full">
-      <input
+      <textarea
         onChange={(e) => {
           setUserMessage(e.target.value);
         }}
@@ -18,7 +18,7 @@ function InputTaker({
         className="w-full outline-none rounded-2xl
          bg-lightBlue3 placeholder:text-[#828BAC] px-[12px]
           text-white placeholder:px-[9px] py-[12px]"
-      ></input>
+      ></textarea>
     </div>
   );
 }

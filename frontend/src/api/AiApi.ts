@@ -1,6 +1,6 @@
 const getAIresponse = async (message: string) => {
   try {
-    const url = `http://localhost:3000/api/v1/ai/get-answer`;
+    const url = `http://localhost:8000/api/v1/ai/get-answer`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -19,7 +19,7 @@ const getAIresponse = async (message: string) => {
 };
 const getAllChats = async () => {
   try {
-    const url = `http://localhost:3000/api/v1/ai/get-all-chat`;
+    const url = `http://localhost:8000/api/v1/ai/get-all-chat`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
@@ -36,7 +36,7 @@ const getAllChats = async () => {
 };
 const getParticularChat = async (id: string) => {
   try {
-    const url = `http://localhost:3000/api/v1/ai/get-particular-chat?id=${id}`;
+    const url = `http://localhost:8000/api/v1/ai/get-particular-chat?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
@@ -54,7 +54,7 @@ const getParticularChat = async (id: string) => {
 };
 const saveNewChat = async (message: any, id: any) => {
   try {
-    const url = `http://localhost:3000/api/v1/ai/save-chat-new?id=${id}`;
+    const url = `http://localhost:8000/api/v1/ai/save-chat-new?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "POST",
@@ -76,7 +76,7 @@ const saveNewChat = async (message: any, id: any) => {
 };
 const saveOldSessionChat = async (message: any, id: any) => {
   try {
-    const url = `http://localhost:3000/api/v1/ai/save-chat-old?id=${id}`;
+    const url = `http://localhost:8000/api/v1/ai/save-chat-old?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "POST",

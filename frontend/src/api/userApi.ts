@@ -1,6 +1,6 @@
 const logOutUser = async () => {
   const token = localStorage.getItem("accessToken");
-  const response = await fetch("http://localhost:3000/api/v1/user/logout", {
+  const response = await fetch("http://localhost:8000/api/v1/user/logout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +16,7 @@ const logInUser = async (params: {
 
   password: string;
 }) => {
-  const response = await fetch("http://localhost:3000/api/v1/user/login", {
+  const response = await fetch("http://localhost:8000/api/v1/user/login", {
     method: "POST",
 
     headers: {
@@ -33,7 +33,7 @@ const createAccount = async (params: {
   email: string;
   password: string;
 }) => {
-  const response = await fetch("http://localhost:3000/api/v1/user/signUp", {
+  const response = await fetch("http://localhost:8000/api/v1/user/signUp", {
     method: "POST",
 
     headers: {
@@ -44,7 +44,7 @@ const createAccount = async (params: {
   return response;
 };
 const logInCheck = async () => {
-  const response = await fetch("http://localhost:3000/api/v1/user/loginCheck", {
+  const response = await fetch("http://localhost:8000/api/v1/user/loginCheck", {
     method: "GET",
     credentials: "include",
   });
@@ -53,7 +53,7 @@ const logInCheck = async () => {
 const getUserProfile = async () => {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(
-    "http://localhost:3000/api/v1/user/user-profile",
+    "http://localhost:8000/api/v1/user/user-profile",
 
     {
       method: "GET",
