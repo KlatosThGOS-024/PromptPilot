@@ -2,7 +2,7 @@ import { responseType } from "../components/MessageBox";
 
 const getAIresponse = async (message: string) => {
   try {
-    const url = `http://localhost:8000/api/v1/ai/get-answer`;
+    const url = `https://promptpilot.onrender.com/api/v1/ai/get-answer`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -21,7 +21,7 @@ const getAIresponse = async (message: string) => {
 };
 const getAllChats = async () => {
   try {
-    const url = `http://localhost:8000/api/v1/ai/get-all-chat`;
+    const url = `https://promptpilot.onrender.com/api/v1/ai/get-all-chat`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
@@ -38,7 +38,7 @@ const getAllChats = async () => {
 };
 const getParticularChat = async (id: string) => {
   try {
-    const url = `http://localhost:8000/api/v1/ai/get-particular-chat?id=${id}`;
+    const url = `https://promptpilot.onrender.com/api/v1/ai/get-particular-chat?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
@@ -57,8 +57,8 @@ const getParticularChat = async (id: string) => {
 
 export const getChatName = async (id: string) => {
   try {
-    //   const url = `http://localhost:8000/api/v1/ai/save-chat-new?id=${id}`;
-    const url = `http://localhost:8000/api/v1/ai/getChatName?id=${id}`;
+    //   const url = `https://promptpilot.onrender.com/api/v1/ai/save-chat-new?id=${id}`;
+    const url = `https://promptpilot.onrender.com/api/v1/ai/getChatName?id=${id}`;
 
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
@@ -78,7 +78,7 @@ export const getChatName = async (id: string) => {
 };
 const saveNewChat = async (message: responseType, id: string) => {
   try {
-    const url = `http://localhost:8000/api/v1/ai/save-chat-new?id=${id}`;
+    const url = `https://promptpilot.onrender.com/api/v1/ai/save-chat-new?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "POST",
@@ -100,7 +100,7 @@ const saveNewChat = async (message: responseType, id: string) => {
 };
 const saveOldSessionChat = async (message: any, id: any) => {
   try {
-    const url = `http://localhost:8000/api/v1/ai/save-chat-old?id=${id}`;
+    const url = `https://promptpilot.onrender.com/api/v1/ai/save-chat-old?id=${id}`;
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "POST",
