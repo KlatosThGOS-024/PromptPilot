@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { DiscoverCards } from "./DiscoverCards";
 import { makeItFalse } from "../functions/messages/message";
-interface responseType {
+export interface responseType {
   response_frm: string;
   response: string;
   chatId: string;
@@ -56,10 +56,7 @@ export const MessageBox = () => {
   const userReducerValue = useSelector(
     (state: IRootState) => state.userReducer
   );
-  const userSelector = useSelector((state: IRootState) => {
-    return state.userReducer.userDetail;
-  });
-  console.log(userSelector);
+
   useEffect(() => {
     const response = {
       response_frm: "User",
@@ -70,6 +67,7 @@ export const MessageBox = () => {
       if (sessionId == undefined) {
         const newSessionId = uuidv4();
         navigate(`/c/${newSessionId}`, { replace: true });
+
         saveNewChat(response, newSessionId);
       } else {
         saveOldSessionChat(response, sessionId);

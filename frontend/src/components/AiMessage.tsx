@@ -1,14 +1,34 @@
+import { useEffect, useState } from "react";
+
 export const AiResponse = ({ message }: { message: string }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+  useEffect(() => {
+    let index = 0;
+    setDisplayedText("");
+    setIsTypingComplete(false);
+
+    const interval = setInterval(() => {
+      if (index < message.length) {
+        setDisplayedText((prev) => prev + message[index]);
+        index++;
+      } else {
+        clearInterval(interval);
+        setIsTypingComplete(true);
+      }
+    }, 20);
+
+    return () => clearInterval(interval);
+  }, [message]);
+
   return (
-    <div className="space-y-3 ">
-      <div className="flex w-full flex-col items-start ">
-        <div
-          className="h-fit max-w-[80%]  whitespace-pre-wrap 
-            break-words rounded-2xl text-white bg-lightBlue2 px-5 py-3 text-base"
-        >
-          {message}
-        </div>
-      </div>
+    <div
+      suppressHydrationWarning
+      className="h-fit max-w-[80%] mt-[48px] whitespace-pre-wrap 
+      px-5 py-3 text-base leading-10 break-words rounded-2xl bg-[#161C2E]  
+       text-white"
+    >
+      {displayedText || (isTypingComplete ? message : "...")}
     </div>
   );
 };

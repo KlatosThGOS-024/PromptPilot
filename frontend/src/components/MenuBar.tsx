@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Chats } from "./Chats";
 import { motion } from "framer-motion";
 
@@ -13,12 +13,6 @@ export const MenuBar = () => {
   const handleClick = () => {
     setOpenMenu(!openMenu);
   };
-  // useEffect(() => {
-  //   const handleResize = () =>
-  //     setOpenMenu((prev) => prev && window.innerWidth < 768);
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
 
   return (
     <section>

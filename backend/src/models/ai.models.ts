@@ -13,6 +13,10 @@ const ChatSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      chatName: {
+        type: String,
+        required: true,
+      },
       messages: [
         {
           response_frm: {

@@ -4,6 +4,7 @@ import ApiResponse from "../utils/ApiResponse";
 import ApiError from "../utils/ApiError";
 
 import Chat from "../models/ai.models";
+import { IChat } from "../types/ai.types";
 
 const getAnswer = asyncHandler(async (req: Request, res: Response) => {
   const getQuestion = req.body.getQuestion as string;
@@ -152,7 +153,7 @@ const saveNewChatSession = asyncHandler(async (req: Request, res: Response) => {
       );
     return;
   }
-  const { response_frm, response, chatId } = chat.messages;
+  const { response_frm, response, chatId, chatName } = chat.messages;
 
   try {
     const createNewChatSession = await Chat.create({
@@ -160,6 +161,7 @@ const saveNewChatSession = asyncHandler(async (req: Request, res: Response) => {
       sessions: [
         {
           sessionId,
+          chatName: response,
           messages: [
             {
               response_frm,
@@ -187,6 +189,7 @@ const saveNewChatSession = asyncHandler(async (req: Request, res: Response) => {
     return;
   }
 });
+
 export {
   getAnswer,
   getAllChats,

@@ -5,9 +5,10 @@ import { getParticularChat } from "../api/AiApi";
 
 type ChatProps = {
   sessionId: string;
+  chatName: string;
 };
 
-export const Chat = ({ sessionId }: ChatProps) => {
+export const Chat = ({ sessionId, chatName }: ChatProps) => {
   const getParticularChatFunc = async (sessionId: string) => {
     try {
       await getParticularChat(sessionId);
@@ -21,13 +22,14 @@ export const Chat = ({ sessionId }: ChatProps) => {
 
   return (
     <div className=" my-3 bg-gray-500 rounded-lg px-3 py-4">
-      <div>{sessionId}</div>
+      <div>{chatName}</div>
     </div>
   );
 };
 
 export const Chats = () => {
   const [chatSession, setChatSession] = useState<any[]>([""]);
+
   const getChatAll = async () => {
     try {
       const response = await getAllChats();
@@ -44,11 +46,11 @@ export const Chats = () => {
     <div>
       {chatSession.map((value, index) => {
         const id = value.sessions?.[0]?.sessionId;
-
+        const chatName = value.sessions?.[0]?.chatName;
         return (
           id != undefined && (
             <a key={index} href={`/c/${id}`}>
-              <Chat sessionId={id} />
+              <Chat sessionId={id} chatName={chatName} />
             </a>
           )
         );

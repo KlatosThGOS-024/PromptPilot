@@ -1,3 +1,5 @@
+import { responseType } from "../components/MessageBox";
+
 const getAIresponse = async (message: string) => {
   try {
     const url = `http://localhost:8000/api/v1/ai/get-answer`;
@@ -52,7 +54,29 @@ const getParticularChat = async (id: string) => {
     console.log(error);
   }
 };
-const saveNewChat = async (message: any, id: any) => {
+
+export const getChatName = async (id: string) => {
+  try {
+    //   const url = `http://localhost:8000/api/v1/ai/save-chat-new?id=${id}`;
+    const url = `http://localhost:8000/api/v1/ai/getChatName?id=${id}`;
+
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const saveNewChat = async (message: responseType, id: string) => {
   try {
     const url = `http://localhost:8000/api/v1/ai/save-chat-new?id=${id}`;
     const token = localStorage.getItem("accessToken");
