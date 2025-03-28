@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<UserProtectRouter />}>
-            <Route element={<HomePage />} path="/pilot"></Route>
+            <Route element={<HomePage />} path="/"></Route>
             <Route element={<HomePage />} path="/c/:sessionId"></Route>
           </Route>
 

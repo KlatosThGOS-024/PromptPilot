@@ -30,7 +30,7 @@ export const Login = () => {
 
         toast.success("Login successful!");
         setTimeout(() => {
-          navigate("/pilot");
+          navigate("/");
         }, 2000);
       } else {
         const errorMessage = response.message || "Login failed";

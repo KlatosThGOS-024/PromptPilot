@@ -83,7 +83,7 @@ export const MenuBar = () => {
                   ></path>
                 </svg>
               </button>
-              <a href={"/pilot"}>
+              <a href={"/"}>
                 <button
                   aria-label="New chat"
                   data-testid="create-new-chat-button"
