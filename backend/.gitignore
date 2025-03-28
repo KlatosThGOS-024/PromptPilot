@@ -13,10 +13,10 @@ dist
 # IDE specific files
 .idea/
 *.sublime-workspace
-
+/dist
 # npm package lock file (optional, if you use yarn or other package managers)
 yarn.lock
-
+dist
 # Build directory (if applicable)
 build/
 
