@@ -1,5 +1,5 @@
 {
-  "name": "uberclone",
+  "name": "promptpilot_backend",
   "version": "1.0.0",
   "description": "Prompt Pilot with backend and frontend",
   "main": "index.js",
