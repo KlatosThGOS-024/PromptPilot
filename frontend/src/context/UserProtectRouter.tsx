@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { getUserProfile } from "../api/userApi";
 import { Navigate, Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";

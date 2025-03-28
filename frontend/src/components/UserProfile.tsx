@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { IRootState } from "../app/store/store";
 import { SetStateAction, useState } from "react";
 import { logOutUser } from "../api/userApi";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Theme({
   setInput,
