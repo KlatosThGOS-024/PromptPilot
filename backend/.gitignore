@@ -15,7 +15,6 @@ dist
 *.sublime-workspace
 
 # npm package lock file (optional, if you use yarn or other package managers)
-package-lock.json
 yarn.lock
 
 # Build directory (if applicable)
