@@ -28,7 +28,7 @@ app.use(router);
 /////////////////////////////////////
 databaseConnection().then((response) => {
   console.log(response);
-  app.listen(8000, () => {
-    console.log(`Server has been started on port ${8000}`);
+  app.listen(10000, () => {
+    console.log(`Server has been started on port ${10000}`);
   });
 });
