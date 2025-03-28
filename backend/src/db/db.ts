@@ -6,7 +6,7 @@ const databaseConnection = async () => {
     //   `${process.env.DATABASE_URI}`
     // );
     const connectionInstance = await mongoose.connect(
-      ` mongodb+srv://new:xP0U3KZJQM7yFqAl@cluster0.une21tv.mongodb.net/`
+      `mongodb+srv://new:xP0U3KZJQM7yFqAl@cluster0.une21tv.mongodb.net/`
     );
 
     return connectionInstance.connection.host;
