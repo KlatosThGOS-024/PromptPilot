@@ -1,7 +1,7 @@
 {
   "name": "uberclone",
   "version": "1.0.0",
-  "description": "uberClone with backend and frontend",
+  "description": "Prompt Pilot with backend and frontend",
   "main": "index.js",
   "scripts": {
     "build": "tsc -b",
@@ -9,8 +9,8 @@
     "dev": "npm run build && npm run node"
   },
   "keywords": [
-    "Uber",
-    "Clone",
+    "Ai",
+    "Prompt Pilot",
     "JS",
     "TS"
   ],
