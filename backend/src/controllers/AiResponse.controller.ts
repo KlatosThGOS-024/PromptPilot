@@ -4,8 +4,7 @@ import ApiResponse from "../utils/ApiResponse";
 import ApiError from "../utils/ApiError";
 
 import Chat from "../models/ai.models";
-import { IChat } from "../types/ai.types";
-
+const aiApi = "AIzaSyBvCHs7Hl_GKc9JhTugUVDT-ulTxNOCwV0";
 const getAnswer = asyncHandler(async (req: Request, res: Response) => {
   const getQuestion = req.body.getQuestion as string;
   console.log(getQuestion);
@@ -14,8 +13,8 @@ const getAnswer = asyncHandler(async (req: Request, res: Response) => {
     return;
   }
   try {
-    const api = process.env.AiAPI;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${api}`;
+    // const api = process.env.AiAPI;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${aiApi}`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
