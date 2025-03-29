@@ -10,7 +10,7 @@ export const SignUpPage = () => {
         <div className="block lg:hidden pt-8 pb-4 text-center max-lg:hidden">
           <img
             className="w-24 h-24 mx-auto"
-            src="./images/3Dman.png"
+            src="/Images/3Dman.png"
             alt="Logo"
           />
         </div>
@@ -20,7 +20,7 @@ export const SignUpPage = () => {
             <div>
               <img
                 className="my-24 w-[600px]"
-                src="./images/3Dman.png"
+                src="/Images/3Dman.png"
                 alt="3D Illustration"
               />
             </div>

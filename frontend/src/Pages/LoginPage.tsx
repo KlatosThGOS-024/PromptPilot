@@ -17,7 +17,7 @@ export const LoginPage = () => {
             <div>
               <img
                 className="my-24 w-[600px]"
-                src="/images/3Dgirl.png"
+                src="/Images/3Dgirl.png"
                 alt="3D Illustration"
               />
             </div>
