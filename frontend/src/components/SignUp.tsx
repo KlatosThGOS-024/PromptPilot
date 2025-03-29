@@ -17,7 +17,7 @@ export function InputTaker({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-public_sans font-600 text-[18px] text-[#D0CDE4]">
+      <label className="font-public_sans font-600 text-base lg:text-lg text-[#D0CDE4]">
         {label}
       </label>
       <input
@@ -25,8 +25,8 @@ export function InputTaker({
         onChange={(e: React.FormEvent<HTMLInputElement>) => {
           setInput(e.currentTarget.value);
         }}
-        className="font-public_sans focus:border-[#7367F0] rounded-lg bg-[#2F3349] border-[1px] px-[12px] py-[10px] 
-         border-[#D0CDE4] outline-none font-600 text-[16px] text-[#D0CDE4]"
+        className="font-public_sans focus:border-[#7367F0] rounded-lg bg-[#2F3349] border-[1px] px-3 py-2 
+         border-[#D0CDE4] outline-none font-600 text-base text-[#D0CDE4]"
         placeholder={placeholder}
       />
     </div>
@@ -35,7 +35,7 @@ export function InputTaker({
 
 export const Loader = () => (
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-[#7367F0]"></div>
+    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#7367F0]"></div>
   </div>
 );
 
@@ -99,17 +99,17 @@ export const SignUp = () => {
         pauseOnHover
         theme="dark"
       />
-      <div className="px-[18px] py-[28px] space-y-[28px] mx-[48px]">
+      <div className="px-4 lg:px-6 py-6 space-y-6 mx-4 lg:mx-12">
         <div>
-          <h2 className="font-public_sans font-600 my-2 text-[28px] text-[#D0CDE4]">
+          <h2 className="font-public_sans font-600 my-2 text-2xl lg:text-[28px] text-[#D0CDE4]">
             Sign Up
           </h2>
-          <p className="font-public_sans font-600 text-[18px] text-[#D0CDE4]">
+          <p className="font-public_sans font-600 text-base lg:text-lg text-[#D0CDE4]">
             Create your account
           </p>
         </div>
-        <div className="space-y-[18px]">
-          <div className="flex gap-[64px]">
+        <div className="space-y-4 lg:space-y-[18px]">
+          <div className="flex flex-col lg:flex-row lg:gap-16 gap-4">
             <InputTaker
               setInput={setFirstName}
               label="Firstname"
@@ -139,7 +139,7 @@ export const SignUp = () => {
           />
         </div>
 
-        <span className="inline-block text-[18px] text-[#D0CDE4]">
+        <span className="inline-block text-sm lg:text-base text-[#D0CDE4]">
           I agree to{" "}
           <a className="text-[#7367F0] opacity-80 cursor-pointer">
             privacy policy & terms
@@ -148,13 +148,13 @@ export const SignUp = () => {
 
         <button
           onClick={handleSignUp}
-          className="text-[18px] hover:opacity-90 inline-block w-full py-3
+          className="text-base lg:text-lg hover:opacity-90 inline-block w-full py-3
          rounded-lg font-public_sans bg-[#7367F0] text-[#D0CDE4]"
         >
           Sign Up
         </button>
         <div className="text-center">
-          <p className="text-[#D0CDE4] mx-2 text-[18px]">
+          <p className="text-[#D0CDE4] mx-2 text-sm lg:text-base">
             Already have an account?{" "}
             <Link to={"/user/login"}>
               <span className="text-[#7367F0] hover:opacity-90">
