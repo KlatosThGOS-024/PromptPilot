@@ -3,6 +3,7 @@ import { getUserProfile } from "../api/userApi";
 import { Navigate, Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userAccountDetail } from "../functions/messages/message";
+import { Loader } from "../components/SignUp";
 
 export const UserProtectRouter = () => {
   const [isLoggedIn, setIsloggedIn] =
@@ -34,7 +35,7 @@ export const UserProtectRouter = () => {
   }, [dispatch]);
 
   if (isLoggedIn === null) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return isLoggedIn ? <Outlet /> : <Navigate to={"/user/login"} />;

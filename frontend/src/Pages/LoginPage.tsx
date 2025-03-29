@@ -7,7 +7,7 @@ export const LoginPage = () => {
         <div className="block lg:hidden pt-8 pb-4 text-center max-lg:hidden">
           <img
             className="w-24 h-24 mx-auto"
-            src="../../public/images/3Dgirl.png"
+            src="images/3Dgirl.png"
             alt="Logo"
           />
         </div>
