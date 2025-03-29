@@ -112,7 +112,7 @@ export const MessageBox = () => {
   }, [aiReducerValue]);
 
   return (
-    <section className="w-full my-7 pb-[64px] pt-4">
+    <section className="lg:w-[900px] my-7 pb-[96px] pt-4">
       {cardSelector && (
         <div className="  my-[196px] ">
           <DiscoverCards />

@@ -50,8 +50,10 @@ export const ProfileMenu = () => {
 
   return (
     <div
-      className="flex font-[600] z-30 text-[16px] flex-col
-     gap-[26px]  absolute right-0 bg-[#1C2238] rounded-xl my-1 py-4 px-[38px] text-[#F2DDCC]"
+      className="flex font-[600] z-30 text-[16px]
+       flex-col
+     gap-[26px]  absolute right-0 bg-[#1C2238] 
+     rounded-xl my-1 py-4 px-[38px] text-[#F2DDCC]"
     >
       <div className="text-center bg-lightBlue2 py-5 rounded-xl px-6 flex items-center flex-col gap-3">
         <img src="/icons/copilot-icon.svg" width={28} />
@@ -117,7 +119,10 @@ export const ProfileCircle = () => {
         onClick={() => {
           setOpenPanel(!openPanel);
         }}
-        className="text-[28px] active:opacity-90 text-[#F2DDCC] bg-lightBlue2 py-2 rounded-full px-[21px] cursor-pointer border-[0.1px]"
+        className="text-[16px] 
+        active:opacity-90 text-[#F2DDCC]
+         bg-lightBlue2 rounded-full p-2 px-4
+          cursor-pointer border-[0.1px]"
       >
         {userSelector.fullName[0]}
       </div>

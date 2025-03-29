@@ -7,7 +7,10 @@ export const HomePage = () => {
   return (
     <section>
       <div className="flex h-screen">
-        <div className=" absolute top-0 right-0 m-[36px]">
+        <div
+          className=" absolute -top-5  right-0 
+        m-[36px]"
+        >
           <ProfileCircle />
         </div>
         <div className="absolute w-[20%] ">
