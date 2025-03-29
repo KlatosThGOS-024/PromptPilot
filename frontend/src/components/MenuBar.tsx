@@ -23,13 +23,25 @@ export const MenuBar = () => {
         transition={{ type: "tween", duration: 0.3 }}
         className={`h-screen bg-lightBlue2
            overflow-y-auto custom-scrollbar flex-grow 
-           max-md:absolute max-sm:w-[320px] max-md:w-[360px] md:w-[420px]  `}
+       z-20    max-md:absolute max-sm:w-[320px] max-md:w-[360px] md:w-[420px]  `}
       >
-        <div className="px-[18px]  py-[12px] text-[#ECECEC] ">
-          <div className=" flex items-center justify-between ">
+        <div
+          className="px-[18px] py-[12px]
+         text-[#ECECEC] "
+        >
+          <div
+            className=" flex items-center
+           justify-between "
+          >
             <button
               onClick={handleClick}
-              className="h-10 rounded-lg px-2 text-token-text-secondary focus-visible:outline-0 disabled:text-token-text-quaternary focus-visible:bg-token-sidebar-surface-secondary enabled:hover:bg-token-sidebar-surface-secondary no-draggable"
+              className="h-10 rounded-lg px-2 
+              text-token-text-secondary 
+              focus-visible:outline-0 
+              disabled:text-token-text-quaternary 
+              focus-visible:bg-token-sidebar-surface-secondary
+               enabled:hover:bg-token-sidebar-surface-secondary 
+              no-draggable"
             >
               <svg
                 width="24"
