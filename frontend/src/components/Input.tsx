@@ -37,7 +37,7 @@ export const Input = () => {
 
   return (
     <div className="fixed bottom-4  left-2 right-2 sm:bottom-6 sm:left-4 sm:right-4 md:bottom-8 md:left-1/4 md:right-1/4 lg:left-1/6 lg:right-1/6">
-      <div className="lg:w-[700px] max-sm:w-[380px] mx-auto max-md:w-[600px] rounded-xl sm:rounded-3xl shadow-lg sm:shadow-2xl bg-lightBlue2">
+      <div className="lg:w-[700px] max-sm:w-[320px] mx-auto max-md:w-[600px] rounded-xl sm:rounded-3xl shadow-lg sm:shadow-2xl bg-lightBlue2">
         <div className="flex gap-1  sm:gap-2 md:gap-4 px-2 sm:px-3 md:px-4 py-2 sm:py-3 items-center">
           <button className="flex-shrink-0">
             <img
